@@ -19,57 +19,45 @@ class House:
         return f'"Название: {self.name}, кол-во этажей: {self.number_of_floors}".'
 
     def __eq__(self, other):
-        if isinstance(other, House) and isinstance(other.number_of_floors, int):
+        if isinstance(other, House):
             return self.number_of_floors == other.number_of_floors
+        elif isinstance(other, int):
+            return self.number_of_floors == other
         else:
             return print("Сравнение не может быть выполнено")
 
     def __lt__(self, other):
-        if isinstance(other, House) and isinstance(other.number_of_floors, int):
+        if isinstance(other, House):
             return self.number_of_floors < other.number_of_floors
+        elif isinstance(other, int):
+            return self.number_of_floors < other
         else:
             return print("Сравнение не может быть выполнено")
-
 
     def __le__(self, other):
-        if isinstance(other, House) and isinstance(other.number_of_floors, int):
-            return self.number_of_floors <= other.number_of_floors
-        else:
-            return print("Сравнение не может быть выполнено")
-
+        return self.__eq__(other) or self.__lt__(other)
 
     def __gt__(self, other):
-        if isinstance(other, House) and isinstance(other.number_of_floors, int):
-            return self.number_of_floors > other.number_of_floors
-        else:
-            return print("Сравнение не может быть выполнено")
-
+        return not self.__le__(other)
 
     def __ge__(self, other):
-        if isinstance(other, House) and isinstance(other.number_of_floors, int):
-            return self.number_of_floors >= other.number_of_floors
-        else:
-            return print("Сравнение не может быть выполнено")
-
+        return not self.__lt__(other)
 
     def __ne__(self, other):
-        if isinstance(other, House) and isinstance(other.number_of_floors, int):
-            return self.number_of_floors != other.number_of_floors
-        else:
-            return print("Сравнение не может быть выполнено")
-
+        return not self.__eq__(other)
 
     def __add__(self, value):
-        self.number_of_floors += value
+        if isinstance(value, int):
+            self.number_of_floors += value
+        elif isinstance(value, House):
+            self.number_of_floors += value.number_of_floors
         return self
 
-    def __radd__(self, value):
-        self.number_of_floors += value
-        return self
+    def __iadd__(self, other: int):
+        return self.__add__(other)
 
-    def __iadd__(self, value):
-         self.number_of_floors += value
-         return self
+    def __radd__(self, other):
+         return self.__add__(other)
 
 h1 = House('ЖК Эльбрус', 10)
 h2 = House('ЖК Акация', 20)
