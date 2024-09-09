@@ -10,9 +10,6 @@ class Product:
 
 class Shop():
     __file_name = 'products.txt'
-    file = open(__file_name, 'w')
-    file.close()
-
 
     def get_products(self):
         file = open(self.__file_name, 'r')
